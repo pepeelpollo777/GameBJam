@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://jrccfx6d3526"]
+
+[ext_resource type="Script" uid="uid://dnr48j3hv6753" path="res://Characters/Player/gas.gd" id="1_c8tse"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_f70ue"]
+
+[node name="Gas" type="Area2D"]
+script = ExtResource("1_c8tse")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_f70ue")

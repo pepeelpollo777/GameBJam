@@ -1,10 +1,15 @@
-[gd_scene load_steps=4 format=3 uid="uid://b6n8bh4i6wprj"]
+[gd_scene load_steps=7 format=3 uid="uid://b6n8bh4i6wprj"]
 
 [ext_resource type="Texture2D" uid="uid://bqqskfp6oj2p2" path="res://icon.svg" id="1_k0mgt"]
-[ext_resource type="PackedScene" uid="uid://y3kjd2fwj0ow" path="res://player.tscn" id="2_njr5j"]
+[ext_resource type="PackedScene" uid="uid://y3kjd2fwj0ow" path="res://Characters/Player/player.tscn" id="2_njr5j"]
+[ext_resource type="PackedScene" uid="uid://d1dbr0l2lqaam" path="res://Characters/Cat/cat.tscn" id="3_rdhbp"]
+[ext_resource type="PackedScene" uid="uid://ej2owooarydx" path="res://Characters/Npc/npc.tscn" id="4_4xtnr"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_njr5j"]
 size = Vector2(166, 20)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4xtnr"]
+size = Vector2(14, 123)
 
 [node name="LevelTest" type="Node2D"]
 
@@ -22,3 +27,23 @@ shape = SubResource("RectangleShape2D_njr5j")
 
 [node name="Player" parent="." instance=ExtResource("2_njr5j")]
 position = Vector2(24, 71)
+
+[node name="Cat" parent="." instance=ExtResource("3_rdhbp")]
+position = Vector2(151, 127)
+
+[node name="Npc" parent="." instance=ExtResource("4_4xtnr")]
+position = Vector2(129, 123)
+
+[node name="StaticBody2D2" type="StaticBody2D" parent="."]
+collision_layer = 3
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D2"]
+position = Vector2(170, 69.5)
+shape = SubResource("RectangleShape2D_4xtnr")
+
+[node name="StaticBody2D3" type="StaticBody2D" parent="."]
+collision_layer = 3
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D3"]
+position = Vector2(-6.115, 69.5)
+shape = SubResource("RectangleShape2D_4xtnr")

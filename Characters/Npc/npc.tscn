@@ -1,0 +1,74 @@
+[gd_scene load_steps=10 format=3 uid="uid://ej2owooarydx"]
+
+[ext_resource type="Script" uid="uid://ctdhp4pqf6u03" path="res://Characters/Npc/npc.gd" id="1_pb6ti"]
+[ext_resource type="Texture2D" uid="uid://bhwhwkxhcpgas" path="res://Characters/Npc/Npc.png" id="2_i2kcb"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_02l1c"]
+atlas = ExtResource("2_i2kcb")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pfpua"]
+atlas = ExtResource("2_i2kcb")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_l485g"]
+atlas = ExtResource("2_i2kcb")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_127ao"]
+atlas = ExtResource("2_i2kcb")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mmd5o"]
+atlas = ExtResource("2_i2kcb")
+region = Rect2(64, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_t3jf1"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_02l1c")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pfpua")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_l485g")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_127ao")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mmd5o")
+}],
+"loop": true,
+"name": &"Run",
+"speed": 10.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8smiv"]
+size = Vector2(11, 7)
+
+[node name="Npc" type="CharacterBody2D"]
+collision_layer = 0
+collision_mask = 0
+script = ExtResource("1_pb6ti")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_t3jf1")
+animation = &"Run"
+autoplay = "Run"
+frame = 1
+frame_progress = 0.723217
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0.5, 4.5)
+shape = SubResource("RectangleShape2D_8smiv")
+
+[node name="WallRayRight" type="RayCast2D" parent="."]
+target_position = Vector2(16, 0)
+collision_mask = 2
+
+[node name="WallRayLeft" type="RayCast2D" parent="."]
+target_position = Vector2(-16, 0)
+collision_mask = 2
