@@ -6,30 +6,50 @@ extends Area2D
 
 var dir := Vector2.RIGHT
 var enabled := false
+var overlapping_areas: Array = []  # Para recordar las áreas con las que estamos superpuestos
 
 func _ready():
 	monitoring = false
 	visible = false
+	# Conectar señales para rastrear superposiciones
+	area_entered.connect(_on_area_entered)
+	area_exited.connect(_on_area_exited)
+
+func _on_area_entered(area: Area2D):
+	if not overlapping_areas.has(area):
+		overlapping_areas.append(area)
+
+func _on_area_exited(area: Area2D):
+	if overlapping_areas.has(area):
+		overlapping_areas.erase(area)
 
 func enableBeam(facingDir: int) -> void:
 	enabled = true
+	monitoring = true
+	visible = true
+	monitorable = true
 	if facingDir < 0:
 		dir = Vector2.LEFT
 	else:
 		dir = Vector2.RIGHT
-	monitoring = true
-	visible = true
-	if facingDir < 0:
-		position.x = beamOffsetX * -1
-		scale.x = -1
-	else:
-		position.x = beamOffsetX
-		scale.x = 1
+	position.x = beamOffsetX * facingDir
+	scale.x = -1 if facingDir < 0 else 1
+
+	# Notificar a todas las áreas superpuestas que estamos activos
+	for area in overlapping_areas:
+		if area.has_method("_on_area_entered"):
+			area._on_area_entered(self)
 
 func disableBeam() -> void:
 	enabled = false
 	monitoring = false
 	visible = false
+	monitorable = false
+
+	# Notificar a todas las áreas superpuestas que estamos inactivos
+	for area in overlapping_areas:
+		if area.has_method("_on_area_exited"):
+			area._on_area_exited(self)
 
 func _physics_process(delta: float) -> void:
 	if not enabled:
@@ -40,4 +60,4 @@ func _physics_process(delta: float) -> void:
 		if body is CharacterBody2D:
 			body.velocity += dir * pushStrength * delta
 		elif body is RigidBody2D:
-			body.applyImpulse(Vector2.ZERO, dir * pushStrength * delta)
+			body.apply_impulse(dir * pushStrength * delta)

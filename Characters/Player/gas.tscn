@@ -56,7 +56,7 @@ animations = [{
 "speed": 11.0
 }]
 
-[node name="Gas" type="Area2D"]
+[node name="Gas" type="Area2D" groups=["gas"]]
 script = ExtResource("1_c8tse")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

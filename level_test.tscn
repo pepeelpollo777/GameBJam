@@ -1,9 +1,10 @@
-[gd_scene load_steps=7 format=3 uid="uid://b6n8bh4i6wprj"]
+[gd_scene load_steps=8 format=3 uid="uid://b6n8bh4i6wprj"]
 
 [ext_resource type="Texture2D" uid="uid://bqqskfp6oj2p2" path="res://icon.svg" id="1_k0mgt"]
 [ext_resource type="PackedScene" uid="uid://y3kjd2fwj0ow" path="res://Characters/Player/player.tscn" id="2_njr5j"]
 [ext_resource type="PackedScene" uid="uid://d1dbr0l2lqaam" path="res://Characters/Cat/cat.tscn" id="3_rdhbp"]
 [ext_resource type="PackedScene" uid="uid://ej2owooarydx" path="res://Characters/Npc/npc.tscn" id="4_4xtnr"]
+[ext_resource type="PackedScene" uid="uid://4srfe5hes2t2" path="res://fire.tscn" id="5_6ih1o"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_njr5j"]
 size = Vector2(166, 20)
@@ -47,3 +48,12 @@ collision_layer = 3
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D3"]
 position = Vector2(-6.115, 69.5)
 shape = SubResource("RectangleShape2D_4xtnr")
+
+[node name="Fire" parent="." instance=ExtResource("5_6ih1o")]
+position = Vector2(94, 120)
+
+[node name="Fire2" parent="." instance=ExtResource("5_6ih1o")]
+position = Vector2(71, 120)
+
+[node name="Fire3" parent="." instance=ExtResource("5_6ih1o")]
+position = Vector2(118, 120)
