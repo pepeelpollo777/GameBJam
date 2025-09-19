@@ -8,14 +8,23 @@ class_name Player
 @export var jumpForce: int = -150
 @export var airAcceleration: int = 300
 @export var airFriction: int = 150
-@export var recoilForce: float = 260  
-@export var maxRecoilSpeed: float = 325
+@export var recoilForce: float = 270  
+@export var maxRecoilSpeed: float = 375
+@export var maxHealth: int = 100
+@export var fireDamage: int = 10
+@export var damageCoolDown: float = 1.0
 
 @onready var gas: Area2D = $Gas
 @onready var anims: AnimatedSprite2D = $AnimatedSprite2D
 
 
+var health: int = maxHealth
+var lastDamageTime: float = 0
+var isInvulnerable: bool = false
 var isFire: bool = false
+
+func _ready() -> void:
+	health = maxHealth
 
 func _physics_process(delta: float) -> void:
 	var inputAxis = Input.get_axis("left", "right")
@@ -28,6 +37,34 @@ func _physics_process(delta: float) -> void:
 	handleFire(delta)
 	move_and_slide()
 	animCtrl()
+	
+	lastDamageTime += delta
+
+func takeDamage(amount: int):
+	if isInvulnerable or lastDamageTime < damageCoolDown:
+		print("inmune", lastDamageTime)
+		return
+	
+	print("recibiendo daño", amount)
+	health -= amount
+	lastDamageTime = 0
+	print("vida restante", health)
+	
+	isInvulnerable = true
+	var originalModulate = anims.modulate
+	var tween = create_tween()
+	tween.tween_property(anims, "modulate", Color(2,2,2,1),0.1)
+	tween.tween_property(anims, "modulate", originalModulate, 0.1)
+	tween.set_loops(3)
+	await tween.finished
+	isInvulnerable = false
+	
+	if health <= 0:
+		die()
+
+func die():
+	print("Player Die")
+	queue_free()
 
 func applyGravity(delta):
 	if !is_on_floor():
@@ -47,6 +84,7 @@ func handleJump(delta):
 	if is_on_floor():
 		if Input.is_action_pressed("A"):
 			velocity.y = jumpForce
+			$AudioStreamPlayer2D.play()
 	else:
 		if Input.is_action_just_released("A") and velocity.y < jumpForce / 2:
 			velocity.y = jumpForce / 2

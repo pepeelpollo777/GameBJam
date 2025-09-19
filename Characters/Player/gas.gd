@@ -6,12 +6,11 @@ extends Area2D
 
 var dir := Vector2.RIGHT
 var enabled := false
-var overlapping_areas: Array = []  # Para recordar las áreas con las que estamos superpuestos
+var overlapping_areas: Array = []
 
 func _ready():
 	monitoring = false
 	visible = false
-	# Conectar señales para rastrear superposiciones
 	area_entered.connect(_on_area_entered)
 	area_exited.connect(_on_area_exited)
 
@@ -34,8 +33,7 @@ func enableBeam(facingDir: int) -> void:
 		dir = Vector2.RIGHT
 	position.x = beamOffsetX * facingDir
 	scale.x = -1 if facingDir < 0 else 1
-
-	# Notificar a todas las áreas superpuestas que estamos activos
+	
 	for area in overlapping_areas:
 		if area.has_method("_on_area_entered"):
 			area._on_area_entered(self)
@@ -46,7 +44,6 @@ func disableBeam() -> void:
 	visible = false
 	monitorable = false
 
-	# Notificar a todas las áreas superpuestas que estamos inactivos
 	for area in overlapping_areas:
 		if area.has_method("_on_area_exited"):
 			area._on_area_exited(self)
