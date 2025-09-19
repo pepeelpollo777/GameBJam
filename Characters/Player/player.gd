@@ -89,7 +89,7 @@ func handleFire(delta: float) -> void:
 		velocity.x = clamp(velocity.x, -maxRecoilSpeed, maxRecoilSpeed)
 		if gas != null:
 			if gas.has_method("enableBeam"):
-				gas.call("enableBeam", facingDir)
+				gas.enableBeam(facingDir)
 			else:
 				gas.monitoring = true
 				gas.visible = true
@@ -104,7 +104,4 @@ func handleFire(delta: float) -> void:
 		isFire = false
 		if gas != null:
 			if gas.has_method("disableBeam"):
-				gas.call("disableBeam")
-			else:
-				gas.monitoring = false
-				gas.visible = false
+				gas.disableBeam()

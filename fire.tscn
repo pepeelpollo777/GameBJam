@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://4srfe5hes2t2"]
+
+[ext_resource type="Script" uid="uid://f0kqcc7dso4r" path="res://fire.gd" id="1_2pqqt"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_5ltu8"]
+
+[node name="Fire" type="Area2D"]
+script = ExtResource("1_2pqqt")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_5ltu8")
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]
+[connection signal="area_exited" from="." to="." method="_on_area_exited"]
