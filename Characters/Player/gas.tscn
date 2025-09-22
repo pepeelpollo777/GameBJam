@@ -57,6 +57,7 @@ animations = [{
 }]
 
 [node name="Gas" type="Area2D" groups=["gas"]]
+z_index = 3
 script = ExtResource("1_c8tse")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
